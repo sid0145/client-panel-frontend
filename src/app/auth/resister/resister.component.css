@@ -1,0 +1,8 @@
+mat-form-field {
+  display: block;
+  padding: 0;
+  margin: 10px;
+}
+.bottom {
+  margin-top: 10px;
+}
