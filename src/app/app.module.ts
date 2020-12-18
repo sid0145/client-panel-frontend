@@ -20,7 +20,6 @@ import { ClientDetailsComponent } from "./components/client-details/client-detai
 import { LoginComponent } from "./auth/login/login.component";
 import { ResisterComponent } from "./auth/resister/resister.component";
 import { SettingsComponent } from "./components/settings/settings.component";
-import { NotFoundComponent } from "./components/not-found/not-found.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FooterComponent } from "./components/footer/footer.component";
 import { AuthInterceptor } from "./auth/auth-interceptor";
@@ -38,7 +37,6 @@ import { AuthInterceptor } from "./auth/auth-interceptor";
     LoginComponent,
     ResisterComponent,
     SettingsComponent,
-    NotFoundComponent,
     FooterComponent,
   ],
   imports: [
