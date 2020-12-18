@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
   <div class="container-fluid">
-    <a href="" class="navbar-brand">ClientPanel</a>
+    <a routerLink="/" class="navbar-brand">ClientPanel</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -17,17 +17,23 @@
       </ul>
 
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!userIsAuthenticated">
           <a routerLink="/login" class="nav-link">Login</a>
         </li>
+        <li class="nav-item" *ngIf="userIsAuthenticated">
+          <a class="nav-link">{{ username }}</a>
+        </li>
 
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!userIsAuthenticated">
           <a
             [routerLink]="['/register']"
             routerLinkActive="router-link-active"
             class="nav-link"
             >Register</a
           >
+        </li>
+        <li *ngIf="userIsAuthenticated">
+          <button (click)="onLogout()">Logout</button>
         </li>
       </ul>
     </div>

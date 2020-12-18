@@ -1,8 +1,10 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { ToastrModule } from "ngx-toastr";
+import { FlashMessagesModule } from "angular2-flash-messages";
 
 import { AppMaterialModule } from "./app-material.module";
 
@@ -20,6 +22,8 @@ import { ResisterComponent } from "./auth/resister/resister.component";
 import { SettingsComponent } from "./components/settings/settings.component";
 import { NotFoundComponent } from "./components/not-found/not-found.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FooterComponent } from "./components/footer/footer.component";
+import { AuthInterceptor } from "./auth/auth-interceptor";
 
 @NgModule({
   declarations: [
@@ -35,6 +39,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     ResisterComponent,
     SettingsComponent,
     NotFoundComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,8 +49,12 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     AppMaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    ToastrModule.forRoot(),
+    FlashMessagesModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
