@@ -34,11 +34,10 @@ export class ResisterComponent implements OnInit {
     if (this.signUpForm.invalid) {
       return;
     }
-    console.log(this.signUpForm.value);
-    // this.authService.createUser(
-    //   this.signUpForm.value.username,
-    //   this.signUpForm.value.email,
-    //   this.signUpForm.value.password
-    // );
+    this.authService.createUser(
+      this.signUpForm.value.username,
+      this.signUpForm.value.email,
+      this.signUpForm.value.password
+    );
   }
 }
