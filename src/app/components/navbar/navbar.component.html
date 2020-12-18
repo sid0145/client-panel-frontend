@@ -17,14 +17,23 @@
       </ul>
 
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item" *ngIf="!userIsAuthenticated">
+        <li class="nav-item" *ngIf="!userIsAuthenticated && showRegister">
           <a routerLink="/login" class="nav-link">Login</a>
         </li>
         <li class="nav-item" *ngIf="userIsAuthenticated">
-          <a class="nav-link">{{ username }}</a>
+          <a class="nav-link active"> {{ username | uppercase }}</a>
         </li>
 
-        <li class="nav-item" *ngIf="!userIsAuthenticated">
+        <li class="nav-item" *ngIf="userIsAuthenticated">
+          <a
+            class="nav-link"
+            [routerLink]="['/settings']"
+            routerLinkActive="router-link-active"
+            >Settings</a
+          >
+        </li>
+
+        <li class="nav-item" *ngIf="!userIsAuthenticated && showRegister">
           <a
             [routerLink]="['/register']"
             routerLinkActive="router-link-active"
@@ -33,7 +42,7 @@
           >
         </li>
         <li *ngIf="userIsAuthenticated">
-          <button (click)="onLogout()">Logout</button>
+          <button (click)="onLogout()" class="btn btn-primary">Logout</button>
         </li>
       </ul>
     </div>

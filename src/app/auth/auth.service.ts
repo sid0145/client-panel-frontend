@@ -1,12 +1,13 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
-import { LoginRes, SignUpRes } from "./auth.model";
+import { SignUpRes } from "./auth.model";
 
 import { environment } from "../../environments/environment";
 import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
 import { Subject } from "rxjs";
+import { FlashMessagesService } from "angular2-flash-messages";
 const BACKEND_URL = environment.api_url;
 
 @Injectable({
@@ -21,7 +22,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private flashMessages: FlashMessagesService
   ) {}
 
   getToken() {
@@ -50,13 +52,15 @@ export class AuthService {
       .subscribe(
         (data) => {
           this.router.navigate(["/login"]);
-          this.toastr.success("user created successfully!", "success", {
-            timeOut: 2000,
+          this.flashMessages.show("account created please login to proceed", {
+            cssClass: "alert-success",
+            timeout: 4000,
           });
         },
         (err) => {
-          this.toastr.error("username already taken!", "error", {
-            timeOut: 2000,
+          this.flashMessages.show(" oop's something went wromg!", {
+            cssClass: "alert-danger",
+            timeout: 4000,
           });
         }
       );
@@ -88,13 +92,22 @@ export class AuthService {
             );
             this.saveAuthData(token, expirationDate, this.username);
             this.authStatusListner.next(true);
-            this.toastr.success("logged In successfully!");
+            this.flashMessages.show("you  have logged In successfully", {
+              cssClass: "alert-success",
+              timeout: 4000,
+            });
             this.router.navigate(["/"]);
           }
         },
         (error) => {
           this.authStatusListner.next(false);
-          this.toastr.error("please provide a correct username or password!");
+          this.flashMessages.show(
+            "please provide a correct username and password!",
+            {
+              cssClass: "alert-danger",
+              timeout: 4000,
+            }
+          );
         }
       );
   }

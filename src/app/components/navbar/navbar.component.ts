@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { AuthService } from "src/app/auth/auth.service";
+import { SettingService } from "../setting.service";
 
 @Component({
   selector: "app-navbar",
@@ -11,7 +12,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private userAuthSub: Subscription;
   username: string;
-  constructor(private authService: AuthService) {}
+  showRegister: boolean;
+  registerListnerSubs: Subscription;
+
+  constructor(
+    private authService: AuthService,
+    private setttingService: SettingService
+  ) {}
 
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getIsAuth();
@@ -22,6 +29,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.username = this.authService.getUserName();
       });
+    this.showRegister = this.setttingService.getSettings().allowRegistration;
+    this.registerListnerSubs = this.setttingService
+      .getRegistration()
+      .subscribe((value) => {
+        this.showRegister = value;
+      });
   }
 
   onLogout() {
@@ -30,5 +43,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.userAuthSub.unsubscribe();
+    this.registerListnerSubs.unsubscribe();
   }
 }

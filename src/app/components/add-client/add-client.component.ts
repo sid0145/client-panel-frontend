@@ -4,6 +4,7 @@ import { FlashMessagesService } from "angular2-flash-messages";
 
 import { Client } from "../client";
 import { ClientService } from "../client.service";
+import { SettingService } from "../setting.service";
 
 @Component({
   selector: "app-add-client",
@@ -23,10 +24,13 @@ export class AddClientComponent implements OnInit {
 
   constructor(
     private flashMessages: FlashMessagesService,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private settingService: SettingService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.disabledBalanceOnAdd = this.settingService.getSettings().disabaleBalanceOnAdd;
+  }
 
   onSubmit(form: NgForm) {
     if (this.disabledBalanceOnAdd) {
